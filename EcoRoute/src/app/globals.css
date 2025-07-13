@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Import Virtual Tour Styles */
+@import '../styles/virtual-tour.css';
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
