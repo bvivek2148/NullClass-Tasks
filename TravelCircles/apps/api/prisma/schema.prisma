@@ -1,0 +1,553 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Management
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?   // Nullable for OAuth users
+  firstName     String
+  lastName      String
+  avatar        String?
+  bio           String?
+  location      String?
+  phone         String?
+  dateOfBirth   DateTime?
+  isVerified    Boolean   @default(false)
+  role          UserRole  @default(USER)
+  reputation    Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+  isActive      Boolean   @default(true)
+
+  // OAuth accounts
+  accounts      Account[]
+  
+  // Bookings
+  bookings      Booking[]
+  
+  // Community content
+  posts         Post[]
+  comments      Comment[]
+  postVotes     PostVote[]
+  commentVotes  CommentVote[]
+  
+  // Content creation
+  tips          Tip[]
+  tipRatings    TipRating[]
+  tipVotes      TipVote[]
+  photos        Photo[]
+  photoLikes    PhotoLike[]
+  
+  // Social features
+  followers     Follow[] @relation("UserFollowers")
+  following     Follow[] @relation("UserFollowing")
+  sentMessages  Message[] @relation("MessageSender")
+  receivedMessages Message[] @relation("MessageReceiver")
+  
+  // Notifications
+  notifications Notification[]
+  
+  // User badges and achievements
+  userBadges    UserBadge[]
+  
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// Bus System Models
+model Route {
+  id          String   @id @default(cuid())
+  origin      String
+  destination String
+  distance    Float    // in miles/km
+  duration    Int      // in minutes
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  schedules   Schedule[]
+  stops       RouteStop[]
+  bookings    Booking[]
+  posts       Post[]
+  tips        Tip[]
+  photos      Photo[]
+  reviews     RouteReview[]
+
+  @@map("routes")
+}
+
+model Bus {
+  id           String   @id @default(cuid())
+  number       String   @unique
+  capacity     Int
+  busType      BusType
+  amenities    String[] // JSON array of amenities
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relationships
+  schedules    Schedule[]
+
+  @@map("buses")
+}
+
+model Schedule {
+  id            String    @id @default(cuid())
+  routeId       String
+  busId         String
+  departureTime DateTime
+  arrivalTime   DateTime
+  price         Json      // { economy: number, premium: number }
+  availableSeats Int
+  status        ScheduleStatus @default(ACTIVE)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relationships
+  route         Route     @relation(fields: [routeId], references: [id])
+  bus           Bus       @relation(fields: [busId], references: [id])
+  bookings      Booking[]
+
+  @@map("schedules")
+}
+
+model RouteStop {
+  id            String   @id @default(cuid())
+  routeId       String
+  stopName      String
+  stopOrder     Int
+  arrivalTime   String?  // Time offset from departure
+  departureTime String?  // Time offset from departure
+  createdAt     DateTime @default(now())
+
+  // Relationships
+  route         Route    @relation(fields: [routeId], references: [id])
+
+  @@map("route_stops")
+}
+
+// Booking System
+model Booking {
+  id              String        @id @default(cuid())
+  userId          String
+  routeId         String
+  scheduleId      String
+  bookingNumber   String        @unique
+  seatNumbers     String[]      // Array of seat numbers
+  passengerInfo   Json          // Array of passenger details
+  contactInfo     Json          // Contact information
+  totalAmount     Float
+  paymentStatus   PaymentStatus @default(PENDING)
+  paymentMethod   String?
+  paymentId       String?       // External payment ID
+  status          BookingStatus @default(CONFIRMED)
+  qrCode          String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  travelDate      DateTime
+  cancelledAt     DateTime?
+  cancellationReason String?
+  refundAmount    Float?
+  refundStatus    RefundStatus?
+
+  // Relationships
+  user            User          @relation(fields: [userId], references: [id])
+  route           Route         @relation(fields: [routeId], references: [id])
+  schedule        Schedule      @relation(fields: [scheduleId], references: [id])
+  review          RouteReview?
+
+  @@map("bookings")
+}
+
+model RouteReview {
+  id          String   @id @default(cuid())
+  bookingId   String   @unique
+  userId      String
+  routeId     String
+  rating      Int      // 1-5 stars
+  comment     String?
+  categories  Json?    // Ratings for different aspects
+  isVerified  Boolean  @default(false)
+  helpfulVotes Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relationships
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+  route       Route    @relation(fields: [routeId], references: [id])
+
+  @@map("route_reviews")
+}
+
+// Community System
+model Post {
+  id           String     @id @default(cuid())
+  userId       String
+  title        String
+  content      String     @db.Text
+  category     PostCategory
+  routeId      String?
+  tags         String[]
+  upvotes      Int        @default(0)
+  downvotes    Int        @default(0)
+  viewCount    Int        @default(0)
+  commentCount Int        @default(0)
+  isPinned     Boolean    @default(false)
+  isLocked     Boolean    @default(false)
+  bestAnswerId String?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  // Relationships
+  user         User       @relation(fields: [userId], references: [id])
+  route        Route?     @relation(fields: [routeId], references: [id])
+  comments     Comment[]
+  votes        PostVote[]
+  bestAnswer   Comment?   @relation("BestAnswer", fields: [bestAnswerId], references: [id])
+
+  @@map("posts")
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  postId    String
+  userId    String
+  parentId  String?   // For nested comments
+  content   String    @db.Text
+  upvotes   Int       @default(0)
+  downvotes Int       @default(0)
+  isDeleted Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relationships
+  post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id])
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  votes     CommentVote[]
+  bestAnswerFor Post[] @relation("BestAnswer")
+
+  @@map("comments")
+}
+
+model PostVote {
+  id     String   @id @default(cuid())
+  userId String
+  postId String
+  type   VoteType
+  createdAt DateTime @default(now())
+
+  // Relationships
+  user   User     @relation(fields: [userId], references: [id])
+  post   Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@map("post_votes")
+}
+
+model CommentVote {
+  id        String   @id @default(cuid())
+  userId    String
+  commentId String
+  type      VoteType
+  createdAt DateTime @default(now())
+
+  // Relationships
+  user      User     @relation(fields: [userId], references: [id])
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
+  @@map("comment_votes")
+}
+
+// Content Management
+model Tip {
+  id              String      @id @default(cuid())
+  userId          String
+  title           String
+  content         String      @db.Text
+  category        TipCategory
+  routeId         String?
+  location        String?
+  tags            String[]
+  rating          Float       @default(0)
+  ratingCount     Int         @default(0)
+  helpfulVotes    Int         @default(0)
+  notHelpfulVotes Int         @default(0)
+  viewCount       Int         @default(0)
+  isVerified      Boolean     @default(false)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  // Relationships
+  user            User        @relation(fields: [userId], references: [id])
+  route           Route?      @relation(fields: [routeId], references: [id])
+  ratings         TipRating[]
+  votes           TipVote[]
+  photos          Photo[]
+
+  @@map("tips")
+}
+
+model TipRating {
+  id        String   @id @default(cuid())
+  userId    String
+  tipId     String
+  rating    Int      // 1-5 stars
+  createdAt DateTime @default(now())
+
+  // Relationships
+  user      User     @relation(fields: [userId], references: [id])
+  tip       Tip      @relation(fields: [tipId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tipId])
+  @@map("tip_ratings")
+}
+
+model TipVote {
+  id        String       @id @default(cuid())
+  userId    String
+  tipId     String
+  type      HelpfulVoteType
+  createdAt DateTime     @default(now())
+
+  // Relationships
+  user      User         @relation(fields: [userId], references: [id])
+  tip       Tip          @relation(fields: [tipId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tipId])
+  @@map("tip_votes")
+}
+
+model Photo {
+  id           String   @id @default(cuid())
+  userId       String
+  tipId        String?
+  routeId      String?
+  url          String
+  thumbnailUrl String?
+  caption      String?
+  location     String?
+  tags         String[]
+  likes        Int      @default(0)
+  viewCount    Int      @default(0)
+  exifData     Json?    // Camera, GPS, timestamp data
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relationships
+  user         User       @relation(fields: [userId], references: [id])
+  tip          Tip?       @relation(fields: [tipId], references: [id])
+  route        Route?     @relation(fields: [routeId], references: [id])
+  likes        PhotoLike[]
+
+  @@map("photos")
+}
+
+model PhotoLike {
+  id        String   @id @default(cuid())
+  userId    String
+  photoId   String
+  createdAt DateTime @default(now())
+
+  // Relationships
+  user      User     @relation(fields: [userId], references: [id])
+  photo     Photo    @relation(fields: [photoId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, photoId])
+  @@map("photo_likes")
+}
+
+// Social Features
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String
+  followingId String
+  createdAt   DateTime @default(now())
+
+  // Relationships
+  follower    User     @relation("UserFollowers", fields: [followerId], references: [id])
+  following   User     @relation("UserFollowing", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
+  @@map("follows")
+}
+
+model Message {
+  id         String      @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String      @db.Text
+  isRead     Boolean     @default(false)
+  readAt     DateTime?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  // Relationships
+  sender     User        @relation("MessageSender", fields: [senderId], references: [id])
+  receiver   User        @relation("MessageReceiver", fields: [receiverId], references: [id])
+
+  @@map("messages")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?            // Additional notification data
+  isRead    Boolean          @default(false)
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  // Relationships
+  user      User             @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
+}
+
+// Gamification
+model Badge {
+  id          String      @id @default(cuid())
+  name        String      @unique
+  description String
+  icon        String
+  criteria    Json        // Criteria for earning the badge
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+
+  // Relationships
+  userBadges  UserBadge[]
+
+  @@map("badges")
+}
+
+model UserBadge {
+  id        String   @id @default(cuid())
+  userId    String
+  badgeId   String
+  earnedAt  DateTime @default(now())
+
+  // Relationships
+  user      User     @relation(fields: [userId], references: [id])
+  badge     Badge    @relation(fields: [badgeId], references: [id])
+
+  @@unique([userId, badgeId])
+  @@map("user_badges")
+}
+
+// Enums
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum BusType {
+  STANDARD
+  PREMIUM
+  LUXURY
+}
+
+enum ScheduleStatus {
+  ACTIVE
+  CANCELLED
+  COMPLETED
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum RefundStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum PostCategory {
+  GENERAL
+  ROUTE_SPECIFIC
+  DESTINATION
+  SAFETY
+  BUDGET
+}
+
+enum TipCategory {
+  ROUTE
+  DESTINATION
+  SAFETY
+  BUDGET
+  FOOD
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+
+enum HelpfulVoteType {
+  HELPFUL
+  NOT_HELPFUL
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMATION
+  BOOKING_REMINDER
+  PAYMENT_SUCCESS
+  PAYMENT_FAILED
+  TRIP_UPDATE
+  NEW_MESSAGE
+  NEW_FOLLOWER
+  POST_REPLY
+  POST_VOTE
+  TIP_RATING
+  BADGE_EARNED
+  SYSTEM_ANNOUNCEMENT
+}

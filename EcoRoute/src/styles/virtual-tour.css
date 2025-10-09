@@ -1,0 +1,321 @@
+/* Virtual Tour Styles */
+
+/* Photo Sphere Viewer Custom Styles */
+.psv-container {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.psv-loader {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.psv-loader-text {
+  color: white;
+  font-family: inherit;
+}
+
+/* Hotspot Styles */
+.hotspot-container {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hotspot-container:hover {
+  transform: scale(1.1);
+}
+
+.hotspot-icon {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease;
+}
+
+.hotspot-container:hover .hotspot-icon {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  border-color: white;
+}
+
+.hotspot-tooltip {
+  white-space: nowrap;
+  z-index: 1000;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.hotspot-container:hover .hotspot-tooltip {
+  opacity: 1 !important;
+}
+
+/* Seat Marker Styles */
+.seat-marker-container {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.seat-marker-container:hover {
+  transform: scale(1.2);
+}
+
+.seat-icon {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: all 0.2s ease;
+}
+
+.seat-marker-container:hover .seat-icon {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-color: white;
+}
+
+.seat-tooltip {
+  white-space: nowrap;
+  z-index: 1000;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  min-width: max-content;
+}
+
+.seat-marker-container:hover .seat-tooltip {
+  opacity: 1 !important;
+}
+
+/* Seat Status Colors */
+.seat-marker.seat-available .seat-icon {
+  background-color: #10b981 !important;
+}
+
+.seat-marker.seat-occupied .seat-icon {
+  background-color: #ef4444 !important;
+}
+
+.seat-marker.seat-selected .seat-icon {
+  background-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.seat-marker.seat-disabled .seat-icon {
+  background-color: #6b7280 !important;
+}
+
+.seat-marker.seat-reserved .seat-icon {
+  background-color: #f59e0b !important;
+}
+
+/* Virtual Tour Viewer Styles */
+.virtual-tour-viewer {
+  position: relative;
+  background: #000;
+}
+
+.virtual-tour-viewer .psv-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Control Panel Animations */
+.virtual-tour-viewer button {
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.virtual-tour-viewer button:hover {
+  transform: scale(1.05);
+}
+
+/* Viewpoint Navigation Styles */
+.viewpoint-navigation {
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.viewpoint-navigation button {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.viewpoint-navigation button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.viewpoint-navigation button:hover::before {
+  left: 100%;
+}
+
+/* Interactive Seating Map Styles */
+.interactive-seating-map {
+  font-family: inherit;
+}
+
+.interactive-seating-map button {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.interactive-seating-map button:hover {
+  z-index: 10;
+}
+
+.interactive-seating-map button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Seat Selection Animation */
+.interactive-seating-map button.selected {
+  animation: seatSelected 0.3s ease;
+}
+
+@keyframes seatSelected {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1.05); }
+}
+
+/* Bus Tour Modal Styles */
+.bus-tour-modal {
+  backdrop-filter: blur(4px);
+}
+
+.bus-tour-modal .modal-content {
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading Animations */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hotspot-tooltip,
+  .seat-tooltip {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .hotspot-icon,
+  .seat-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
+  
+  .viewpoint-navigation button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .virtual-tour-viewer .control-panel {
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+  
+  .virtual-tour-viewer .control-panel button {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.25rem;
+  }
+  
+  .viewpoint-navigation {
+    padding: 0.5rem;
+  }
+  
+  .interactive-seating-map .seat-grid {
+    gap: 0.25rem;
+  }
+}
+
+/* Accessibility Improvements */
+.virtual-tour-viewer:focus-within .control-panel,
+.viewpoint-navigation:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.interactive-seating-map button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  z-index: 20;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .hotspot-icon,
+  .seat-icon {
+    border-width: 2px;
+    border-color: currentColor;
+  }
+  
+  .hotspot-tooltip,
+  .seat-tooltip {
+    background: black;
+    color: white;
+    border: 1px solid white;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .hotspot-container,
+  .seat-marker-container,
+  .virtual-tour-viewer button,
+  .viewpoint-navigation button,
+  .interactive-seating-map button {
+    transition: none;
+  }
+  
+  .hotspot-container:hover,
+  .seat-marker-container:hover,
+  .virtual-tour-viewer button:hover {
+    transform: none;
+  }
+  
+  @keyframes seatSelected {
+    0%, 100% { transform: scale(1.05); }
+  }
+  
+  @keyframes modalSlideIn {
+    from, to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

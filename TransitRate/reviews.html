@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - TransitRate</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .review-card {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .filter-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .star-filter {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .star-filter:hover {
+            transform: scale(1.1);
+        }
+        
+        .star-filter.active {
+            color: #fbbf24;
+        }
+        
+        .star-filter.inactive {
+            color: #d1d5db;
+        }
+        
+        .pagination-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .pagination-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .pagination-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .search-highlight {
+            background-color: #fef3c7;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">TR</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">TransitRate</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
+                    <a href="india-transit.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">India Transit</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Dashboard</a>
+                    <a href="reviews.html" class="text-blue-600 font-medium">Reviews</a>
+                    <a href="submit-review.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">Rate Route</a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-24 pb-8 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Community Reviews</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Read authentic reviews from fellow transit users and share your own experiences to help improve public transportation
+                </p>
+            </div>
+            
+            <!-- Search and Filters -->
+            <div class="filter-card rounded-2xl p-6 shadow-lg mb-8">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <!-- Search -->
+                    <div class="lg:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Search Reviews</label>
+                        <div class="relative">
+                            <input type="text" id="search-input" placeholder="Search by route, content, or author..." 
+                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Route Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Route</label>
+                        <select id="route-filter" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="">All Routes</option>
+                            <option value="route-15">Route 15 - Downtown Express</option>
+                            <option value="route-23">Route 23 - Airport Shuttle</option>
+                            <option value="route-7">Route 7 - University Loop</option>
+                            <option value="route-42">Route 42 - Shopping District</option>
+                            <option value="route-11">Route 11 - Residential Connector</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Rating Filter -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Filter by Rating</label>
+                        <div class="flex items-center space-x-1" id="rating-filter">
+                            <span class="star-filter inactive text-2xl" data-rating="1">★</span>
+                            <span class="star-filter inactive text-2xl" data-rating="2">★</span>
+                            <span class="star-filter inactive text-2xl" data-rating="3">★</span>
+                            <span class="star-filter inactive text-2xl" data-rating="4">★</span>
+                            <span class="star-filter inactive text-2xl" data-rating="5">★</span>
+                            <button id="clear-rating" class="ml-2 text-sm text-gray-500 hover:text-gray-700">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sort Options -->
+                <div class="flex flex-wrap items-center gap-4 mt-6 pt-6 border-t border-gray-200">
+                    <span class="text-sm font-medium text-gray-700">Sort by:</span>
+                    <select id="sort-select" class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="highest">Highest Rating</option>
+                        <option value="lowest">Lowest Rating</option>
+                        <option value="helpful">Most Helpful</option>
+                    </select>
+                    
+                    <div class="flex items-center space-x-2 ml-auto">
+                        <span class="text-sm text-gray-600">View:</span>
+                        <button id="grid-view" class="p-2 text-blue-600 bg-blue-50 rounded-lg">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                            </svg>
+                        </button>
+                        <button id="list-view" class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Results Summary -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="text-gray-600">
+                    <span id="results-count">Showing 12 of 8,932 reviews</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="clear-filters" class="text-sm text-blue-600 hover:text-blue-800">Clear All Filters</button>
+                </div>
+            </div>
+            
+            <!-- Reviews Grid -->
+            <div id="reviews-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Reviews will be populated by JavaScript -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center">
+                <button id="load-more" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                    Load More Reviews
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">TR</span>
+                    </div>
+                    <span class="text-xl font-bold">TransitRate</span>
+                </div>
+                <p class="text-gray-400 mb-4">Improving public transportation through community feedback</p>
+                <p class="text-sm text-gray-500">© 2024 TransitRate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reviews Page JavaScript
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeReviewsPage();
+        });
+
+        let currentFilters = {
+            search: '',
+            route: '',
+            rating: 0,
+            sort: 'newest'
+        };
+        
+        let currentPage = 1;
+        const reviewsPerPage = 12;
+        let allReviews = [];
+        let filteredReviews = [];
+
+        function initializeReviewsPage() {
+            generateMockReviews();
+            initializeEventListeners();
+            filterAndDisplayReviews();
+            animateReviewsEntrance();
+        }
+
+        function generateMockReviews() {
+            const routes = [
+                'Route 15 - Downtown Express',
+                'Route 23 - Airport Shuttle', 
+                'Route 7 - University Loop',
+                'Route 42 - Shopping District',
+                'Route 11 - Residential Connector'
+            ];
+            
+            const firstNames = ['Sarah', 'Michael', 'Emma', 'David', 'Lisa', 'James', 'Maria', 'John', 'Anna', 'Robert', 'Jessica', 'Daniel', 'Ashley', 'Matthew', 'Jennifer'];
+            const lastNames = ['M.', 'R.', 'L.', 'K.', 'T.', 'W.', 'S.', 'B.', 'G.', 'H.'];
+            
+            const reviewTemplates = [
+                'Excellent service! The driver was professional and the bus arrived exactly on time. Clean interior and smooth ride.',
+                'Great route for daily commuting. Usually punctual, though can get crowded during peak hours. Overall reliable service.',
+                'Decent service but sometimes inconsistent timing. The buses are generally clean and drivers are friendly.',
+                'Outstanding! Always on time, comfortable seating, and the driver goes above and beyond to help passengers.',
+                'Good service overall. Sometimes delayed during rush hour but the drivers are always professional and courteous.',
+                'Reliable neighborhood service. Great for daily commuting. Would appreciate more frequent service during rush hours.',
+                'Clean buses and friendly drivers. The route coverage is excellent for my daily needs.',
+                'Generally good but occasionally runs late. The new buses are much more comfortable than the old ones.',
+                'Excellent connectivity to major hubs. The digital displays are helpful for tracking the next stops.',
+                'Affordable and convenient. The air conditioning works well during summer months.'
+            ];
+
+            // Generate 50 reviews
+            for (let i = 0; i < 50; i++) {
+                const route = routes[Math.floor(Math.random() * routes.length)];
+                const rating = Math.floor(Math.random() * 3) + 3; // 3-5 stars mostly
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const reviewText = reviewTemplates[Math.floor(Math.random() * reviewTemplates.length)];
+                const helpful = Math.floor(Math.random() * 25);
+                const daysAgo = Math.floor(Math.random() * 30) + 1;
+                
+                allReviews.push({
+                    id: i + 1,
+                    route: route,
+                    rating: rating,
+                    author: firstName + ' ' + lastName,
+                    content: reviewText,
+                    helpful: helpful,
+                    date: daysAgo + ' days ago',
+                    avatar: `https://images.unsplash.com/photo-${Math.floor(Math.random() * 1000000000000)}?w=50&h=50&fit=crop&crop=face`
+                });
+            }
+            
+            // Sort by newest first (reverse order of generation)
+            allReviews.reverse();
+        }
+
+        function initializeEventListeners() {
+            // Search input
+            document.getElementById('search-input').addEventListener('input', function(e) {
+                currentFilters.search = e.target.value.toLowerCase();
+                currentPage = 1;
+                filterAndDisplayReviews();
+            });
+
+            // Route filter
+            document.getElementById('route-filter').addEventListener('change', function(e) {
+                currentFilters.route = e.target.value;
+                currentPage = 1;
+                filterAndDisplayReviews();
+            });
+
+            // Rating filter
+            const ratingFilters = document.querySelectorAll('.star-filter');
+            ratingFilters.forEach(star => {
+                star.addEventListener('click', function() {
+                    const rating = parseInt(this.dataset.rating);
+                    if (currentFilters.rating === rating) {
+                        currentFilters.rating = 0;
+                        clearRatingFilter();
+                    } else {
+                        currentFilters.rating = rating;
+                        setRatingFilter(rating);
+                    }
+                    currentPage = 1;
+                    filterAndDisplayReviews();
+                });
+            });
+
+            // Clear rating filter
+            document.getElementById('clear-rating').addEventListener('click', function() {
+                currentFilters.rating = 0;
+                clearRatingFilter();
+                currentPage = 1;
+                filterAndDisplayReviews();
+            });
+
+            // Sort selector
+            document.getElementById('sort-select').addEventListener('change', function(e) {
+                currentFilters.sort = e.target.value;
+                currentPage = 1;
+                filterAndDisplayReviews();
+            });
+
+            // Clear all filters
+            document.getElementById('clear-filters').addEventListener('click', function() {
+                currentFilters = {
+                    search: '',
+                    route: '',
+                    rating: 0,
+                    sort: 'newest'
+                };
+                document.getElementById('search-input').value = '';
+                document.getElementById('route-filter').value = '';
+                document.getElementById('sort-select').value = 'newest';
+                clearRatingFilter();
+                currentPage = 1;
+                filterAndDisplayReviews();
+            });
+
+            // Load more button
+            document.getElementById('load-more').addEventListener('click', function() {
+                currentPage++;
+                filterAndDisplayReviews(true);
+            });
+        }
+
+        function setRatingFilter(rating) {
+            const stars = document.querySelectorAll('.star-filter');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('inactive');
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                    star.classList.add('inactive');
+                }
+            });
+        }
+
+        function clearRatingFilter() {
+            const stars = document.querySelectorAll('.star-filter');
+            stars.forEach(star => {
+                star.classList.remove('active');
+                star.classList.add('inactive');
+            });
+        }
+
+        function filterAndDisplayReviews(append = false) {
+            // Apply filters
+            filteredReviews = allReviews.filter(review => {
+                // Search filter
+                if (currentFilters.search && 
+                    !review.route.toLowerCase().includes(currentFilters.search) &&
+                    !review.content.toLowerCase().includes(currentFilters.search) &&
+                    !review.author.toLowerCase().includes(currentFilters.search)) {
+                    return false;
+                }
+
+                // Route filter
+                if (currentFilters.route && !review.route.toLowerCase().includes(currentFilters.route.replace('route-', ''))) {
+                    return false;
+                }
+
+                // Rating filter
+                if (currentFilters.rating && review.rating !== currentFilters.rating) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            // Apply sorting
+            filteredReviews.sort((a, b) => {
+                switch (currentFilters.sort) {
+                    case 'newest':
+                        return a.id - b.id; // Assuming higher ID = newer
+                    case 'oldest':
+                        return b.id - a.id;
+                    case 'highest':
+                        return b.rating - a.rating;
+                    case 'lowest':
+                        return a.rating - b.rating;
+                    case 'helpful':
+                        return b.helpful - a.helpful;
+                    default:
+                        return 0;
+                }
+            });
+
+            // Display reviews
+            displayReviews(append);
+            updateResultsCount();
+        }
+
+        function displayReviews(append = false) {
+            const container = document.getElementById('reviews-container');
+            const startIndex = (currentPage - 1) * reviewsPerPage;
+            const endIndex = startIndex + reviewsPerPage;
+            const reviewsToShow = filteredReviews.slice(startIndex, endIndex);
+
+            if (!append) {
+                container.innerHTML = '';
+            }
+
+            reviewsToShow.forEach((review, index) => {
+                const reviewElement = createReviewCard(review);
+                container.appendChild(reviewElement);
+                
+                // Animate new reviews
+                anime({
+                    targets: reviewElement,
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    duration: 600,
+                    delay: index * 100,
+                    easing: 'easeOutExpo'
+                });
+            });
+
+            // Update load more button
+            const loadMoreBtn = document.getElementById('load-more');
+            if (endIndex >= filteredReviews.length) {
+                loadMoreBtn.style.display = 'none';
+            } else {
+                loadMoreBtn.style.display = 'block';
+            }
+        }
+
+        function createReviewCard(review) {
+            const card = document.createElement('div');
+            card.className = 'review-card rounded-xl p-6 shadow-lg';
+            
+            const highlightedContent = highlightSearchTerms(review.content, currentFilters.search);
+            
+            card.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <img src="${review.avatar}" alt="${review.author}" class="w-12 h-12 rounded-full mr-4" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNFNUU3RUIiLz4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyMCIgcj0iOCIgZmlsbD0iIzlDQTNBRiIvPgo8cGF0aCBkPSJNOCAzNkM4IDI4LjI2ODQgMTQuMjY4NCAyMiAyMiAyMkgyNkMzMy43MzE2IDIyIDQwIDI4LjI2ODQgNDAgMzZWNDBIOFYzNloiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+'">
+                    <div>
+                        <h4 class="font-semibold text-gray-800">${review.author}</h4>
+                        <p class="text-sm text-gray-600">${review.date}</p>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="flex items-center mb-2">
+                        <div class="flex text-yellow-400 mr-2">
+                            ${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
+                        </div>
+                        <span class="text-sm text-gray-600">${review.rating}/5</span>
+                    </div>
+                    <p class="text-sm font-medium text-blue-600">${review.route}</p>
+                </div>
+                
+                <p class="text-gray-700 leading-relaxed mb-4">${highlightedContent}</p>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button class="helpful-btn flex items-center space-x-1 text-sm text-gray-600 hover:text-blue-600 transition-colors" data-review-id="${review.id}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path>
+                            </svg>
+                            <span>Helpful (${review.helpful})</span>
+                        </button>
+                        
+                        <button class="flag-btn text-sm text-gray-600 hover:text-red-600 transition-colors" data-review-id="${review.id}">
+                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                            Report
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners for helpful and flag buttons
+            card.querySelector('.helpful-btn').addEventListener('click', function() {
+                const reviewId = this.dataset.reviewId;
+                markHelpful(reviewId, this);
+            });
+            
+            card.querySelector('.flag-btn').addEventListener('click', function() {
+                const reviewId = this.dataset.reviewId;
+                flagReview(reviewId);
+            });
+            
+            return card;
+        }
+
+        function highlightSearchTerms(text, searchTerm) {
+            if (!searchTerm) return text;
+            
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        function markHelpful(reviewId, button) {
+            // Animate button
+            anime({
+                targets: button,
+                scale: [1, 1.1, 1],
+                duration: 300,
+                easing: 'easeOutElastic(1, .8)'
+            });
+            
+            // Update count
+            const span = button.querySelector('span');
+            const currentCount = parseInt(span.textContent.match(/\d+/)[0]);
+            span.textContent = `Helpful (${currentCount + 1})`;
+            
+            // Change color
+            button.classList.add('text-blue-600');
+            button.classList.remove('text-gray-600');
+            
+            showNotification('Thank you for your feedback!', 'success');
+        }
+
+        function flagReview(reviewId) {
+            showNotification('Review has been flagged for moderation', 'info');
+        }
+
+        function updateResultsCount() {
+            const startIndex = (currentPage - 1) * reviewsPerPage + 1;
+            const endIndex = Math.min(currentPage * reviewsPerPage, filteredReviews.length);
+            const total = filteredReviews.length;
+            
+            document.getElementById('results-count').textContent = 
+                `Showing ${startIndex}-${endIndex} of ${total.toLocaleString()} reviews`;
+        }
+
+        function animateReviewsEntrance() {
+            anime({
+                targets: '.filter-card',
+                translateY: [30, 0],
+                opacity: [0, 1],
+                duration: 800,
+                easing: 'easeOutExpo'
+            });
+        }
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 z-50 px-6 py-4 rounded-lg shadow-lg text-white font-medium transform translate-x-full transition-transform duration-300`;
+            
+            const colors = {
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            
+            notification.classList.add(colors[type]);
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+    <script src="transitrate.js"></script>
+</body>
+</html>

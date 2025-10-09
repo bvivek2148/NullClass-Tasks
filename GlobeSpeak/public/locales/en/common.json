@@ -1,0 +1,227 @@
+{
+  "ui": {
+    "navigation": {
+      "home": "Home",
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "settings": "Settings",
+      "about": "About",
+      "contact": "Contact",
+      "logout": "Logout",
+      "login": "Login",
+      "register": "Register",
+      "back": "Back"
+    },
+    "buttons": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "submit": "Submit",
+      "reset": "Reset",
+      "back": "Back",
+      "next": "Next",
+      "previous": "Previous",
+      "close": "Close",
+      "confirm": "Confirm",
+      "search": "Search",
+      "filter": "Filter",
+      "export": "Export",
+      "import": "Import",
+      "download": "Download",
+      "upload": "Upload",
+      "joinEvent": "Join Event",
+      "inviteFriends": "Invite Friends",
+      "translate": "Translate",
+      "listen": "Listen"
+    },
+    "labels": {
+      "language": "Language",
+      "theme": "Theme",
+      "loading": "Loading...",
+      "noData": "No data available",
+      "optional": "Optional",
+      "required": "Required",
+      "selectOption": "Select an option",
+      "selectLanguage": "Select language",
+      "registered": "Registered",
+      "translation": "Translation"
+    },
+    "status": {
+      "online": "Online",
+      "offline": "Offline",
+      "connecting": "Connecting...",
+      "connected": "Connected",
+      "disconnected": "Disconnected",
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending",
+      "completed": "Completed",
+      "failed": "Failed"
+    }
+  },
+  "forms": {
+    "labels": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "fullName": "Full Name",
+      "username": "Username",
+      "phone": "Phone Number",
+      "address": "Address",
+      "city": "City",
+      "country": "Country",
+      "zipCode": "ZIP Code",
+      "dateOfBirth": "Date of Birth",
+      "gender": "Gender",
+      "company": "Company",
+      "jobTitle": "Job Title",
+      "website": "Website",
+      "bio": "Biography",
+      "message": "Message",
+      "subject": "Subject",
+      "enterText": "Enter text to translate"
+    },
+    "placeholders": {
+      "enterEmail": "Enter your email",
+      "enterPassword": "Enter your password",
+      "enterFirstName": "Enter your first name",
+      "enterLastName": "Enter your last name",
+      "enterPhone": "Enter your phone number",
+      "enterMessage": "Enter your message",
+      "searchPlaceholder": "Search...",
+      "typeHere": "Type here..."
+    },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "invalidPhone": "Please enter a valid phone number",
+      "invalidUrl": "Please enter a valid URL",
+      "maxLength": "Maximum {{max}} characters allowed",
+      "minLength": "Minimum {{min}} characters required",
+      "invalidFormat": "Invalid format"
+    }
+  },
+  "messages": {
+    "success": {
+      "saved": "Successfully saved!",
+      "deleted": "Successfully deleted!",
+      "updated": "Successfully updated!",
+      "created": "Successfully created!",
+      "sent": "Successfully sent!",
+      "uploaded": "Successfully uploaded!",
+      "downloaded": "Successfully downloaded!",
+      "loggedIn": "Successfully logged in!",
+      "loggedOut": "Successfully logged out!",
+      "registered": "Successfully registered!"
+    },
+    "errors": {
+      "general": "An error occurred. Please try again.",
+      "network": "Network error. Please check your connection.",
+      "unauthorized": "You are not authorized to perform this action.",
+      "forbidden": "Access denied.",
+      "notFound": "The requested resource was not found.",
+      "serverError": "Server error. Please try again later.",
+      "validationFailed": "Validation failed. Please check your input.",
+      "uploadFailed": "Upload failed. Please try again.",
+      "downloadFailed": "Download failed. Please try again.",
+      "loginFailed": "Login failed. Please check your credentials.",
+      "sessionExpired": "Your session has expired. Please log in again."
+    },
+    "warnings": {
+      "unsavedChanges": "You have unsaved changes. Are you sure you want to leave?",
+      "deleteConfirmation": "Are you sure you want to delete this item?",
+      "irreversibleAction": "This action cannot be undone.",
+      "dataLoss": "This action may result in data loss."
+    },
+    "info": {
+      "welcome": "Welcome to GlobeSpeak!",
+      "noResults": "No results found.",
+      "emptyState": "Nothing to show here yet.",
+      "comingSoon": "Coming soon!",
+      "maintenance": "System maintenance in progress."
+    }
+  },
+  "pages": {
+    "titles": {
+      "home": "Home - GlobeSpeak",
+      "dashboard": "Dashboard - GlobeSpeak",
+      "profile": "Profile - GlobeSpeak",
+      "settings": "Settings - GlobeSpeak",
+      "about": "About - GlobeSpeak",
+      "contact": "Contact - GlobeSpeak",
+      "login": "Login - GlobeSpeak",
+      "register": "Register - GlobeSpeak",
+      "notFound": "Page Not Found - GlobeSpeak"
+    },
+    "descriptions": {
+      "home": "Welcome to GlobeSpeak - Your international communication platform",
+      "dashboard": "Manage your account and view your activity",
+      "profile": "View and edit your profile information",
+      "settings": "Customize your preferences and settings",
+      "about": "Learn more about GlobeSpeak and our mission",
+      "contact": "Get in touch with our support team",
+      "pronunciationPractice": "Practice pronunciation with audio examples"
+    },
+    "headings": {
+      "welcome": "Welcome to GlobeSpeak",
+      "dashboard": "Dashboard",
+      "userProfile": "User Profile",
+      "accountSettings": "Account Settings",
+      "aboutUs": "About Us",
+      "contactUs": "Contact Us",
+      "getStarted": "Get Started",
+      "features": "Features",
+      "testimonials": "Testimonials",
+      "eventAgenda": "Event Agenda",
+      "pronunciationPractice": "Pronunciation Practice",
+      "eventHost": "Event Host",
+      "participants": "Participants"
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Skip to main content",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu",
+    "toggleLanguage": "Toggle language selector",
+    "toggleTheme": "Toggle theme",
+    "sortAscending": "Sort ascending",
+    "sortDescending": "Sort descending",
+    "expandSection": "Expand section",
+    "collapseSection": "Collapse section",
+    "previousPage": "Go to previous page",
+    "nextPage": "Go to next page",
+    "currentPage": "Current page",
+    "pageOf": "Page {{current}} of {{total}}",
+    "loadingContent": "Loading content, please wait",
+    "errorOccurred": "An error occurred",
+    "successMessage": "Success message",
+    "warningMessage": "Warning message",
+    "infoMessage": "Information message"
+  },
+  "time": {
+    "now": "now",
+    "minuteAgo": "a minute ago",
+    "minutesAgo": "{{count}} minutes ago",
+    "hourAgo": "an hour ago",
+    "hoursAgo": "{{count}} hours ago",
+    "dayAgo": "a day ago",
+    "daysAgo": "{{count}} days ago",
+    "weekAgo": "a week ago",
+    "weeksAgo": "{{count}} weeks ago",
+    "monthAgo": "a month ago",
+    "monthsAgo": "{{count}} months ago",
+    "yearAgo": "a year ago",
+    "yearsAgo": "{{count}} years ago"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  }
+}

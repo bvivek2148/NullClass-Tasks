@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Transit - TransitRate</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .india-flag-gradient {
+            background: linear-gradient(135deg, #ff9933 0%, #ffffff 50%, #138808 100%);
+        }
+        
+        .city-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .city-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+        
+        .tab-button.active::after {
+            width: 100%;
+        }
+        
+        .route-tile {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 1px solid #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .route-tile:hover {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .metro-line {
+            height: 4px;
+            border-radius: 2px;
+            margin: 2px 0;
+        }
+        
+        .delhi-metro-red { background: #e50012; }
+        .delhi-metro-yellow { background: #ffde00; }
+        .delhi-metro-blue { background: #0078c8; }
+        .delhi-metro-green { background: #00a651; }
+        .delhi-metro-violet { background: #8b00ff; }
+        .delhi-metro-orange { background: #ff8c00; }
+        .delhi-metro-pink { background: #ff69b4; }
+        .delhi-metro-magenta { background: #ff00ff; }
+        .delhi-metro-grey { background: #808080; }
+        .delhi-metro-aqua { background: #00ffff; }
+        
+        .mumbai-metro-blue { background: #0066cc; }
+        .mumbai-metro-yellow { background: #ffcc00; }
+        .mumbai-metro-red { background: #cc0000; }
+        .mumbai-metro-green { background: #00cc00; }
+        .mumbai-metro-orange { background: #ff6600; }
+        
+        .bangalore-metro-purple { background: #800080; }
+        .bangalore-metro-green { background: #008000; }
+        .bangalore-metro-yellow { background: #ffff00; }
+        .bangalore-metro-red { background: #ff0000; }
+        .bangalore-metro-blue { background: #0000ff; }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .route-map {
+            background: linear-gradient(45deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 2px solid #0ea5e9;
+        }
+        
+        .station-marker {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .weather-widget {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .crowd-level-low { background: #10b981; }
+        .crowd-level-medium { background: #f59e0b; }
+        .crowd-level-high { background: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">TR</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">TransitRate India</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
+                    <a href="india-transit.html" class="text-blue-600 font-medium">India Transit</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Dashboard</a>
+                    <a href="reviews.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Reviews</a>
+                    <a href="submit-review.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">Rate Route</a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-24 pb-12 india-flag-gradient">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-5xl font-bold text-gray-800 mb-6" data-splitting>Indian Transit Systems</h1>
+                <p class="text-xl text-gray-700 max-w-3xl mx-auto mb-8">
+                    Comprehensive rating and review system for India's major metro and bus transit networks. 
+                    From Delhi Metro to Mumbai Local, rate your journey across the subcontinent.
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                    <div class="bg-white bg-opacity-90 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-blue-600">13</div>
+                        <div class="text-sm text-gray-600">Metro Systems</div>
+                    </div>
+                    <div class="bg-white bg-opacity-90 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-green-600">150+</div>
+                        <div class="text-sm text-gray-600">Cities Covered</div>
+                    </div>
+                    <div class="bg-white bg-opacity-90 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-orange-600">2.8M</div>
+                        <div class="text-sm text-gray-600">Daily Commuters</div>
+                    </div>
+                    <div class="bg-white bg-opacity-90 rounded-lg p-4">
+                        <div class="text-2xl font-bold text-purple-600">850km</div>
+                        <div class="text-sm text-gray-600">Metro Network</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- City Tabs -->
+    <section class="py-8 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="tab-button active px-6 py-3 rounded-lg font-semibold" data-city="delhi">
+                    🏛️ Delhi NCR
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" data-city="mumbai">
+                    🌊 Mumbai
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" data-city="bangalore">
+                    🌳 Bangalore
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" data-city="chennai">
+                    🏖️ Chennai
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" data-city="kolkata">
+                    🎭 Kolkata
+                </button>
+                <button class="tab-button px-6 py-3 rounded-lg font-semibold" data-city="hyderabad">
+                    🏰 Hyderabad
+                </button>
+            </div>
+
+            <!-- Delhi NCR Tab Content -->
+            <div class="tab-content active" id="delhi-content">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Metro Lines -->
+                    <div class="lg:col-span-2">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Delhi Metro Lines</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-8">
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Red Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="delhi-metro-red metro-line"></div>
+                                <p class="text-sm text-gray-600">Dilshad Garden ↔ Rithala</p>
+                                <p class="text-xs text-gray-500">34 stations • 44.4 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.2/5 (2,341 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Yellow Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="delhi-metro-yellow metro-line"></div>
+                                <p class="text-sm text-gray-600">Samaypur Badli ↔ HUDA City Centre</p>
+                                <p class="text-xs text-gray-500">37 stations • 49.3 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.6/5 (3,567 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Blue Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="delhi-metro-blue metro-line"></div>
+                                <p class="text-sm text-gray-600">Dwarka ↔ Noida Electronic City</p>
+                                <p class="text-xs text-gray-500">50 stations • 56.1 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.3/5 (4,123 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Green Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="delhi-metro-green metro-line"></div>
+                                <p class="text-sm text-gray-600">Inderlok ↔ Brigadier Hoshiyar Singh</p>
+                                <p class="text-xs text-gray-500">21 stations • 28.9 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.1/5 (1,876 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Violet Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="delhi-metro-violet metro-line"></div>
+                                <p class="text-sm text-gray-600">Kashmere Gate ↔ Raja Nahar Singh</p>
+                                <p class="text-xs text-gray-500">34 stations • 46.7 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.4/5 (2,789 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Airport Express</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="delhi-metro-orange metro-line"></div>
+                                <p class="text-sm text-gray-600">New Delhi Railway Station ↔ IGI Airport</p>
+                                <p class="text-xs text-gray-500">6 stations • 22.7 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★★</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.7/5 (1,234 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Route Map -->
+                        <div class="route-map rounded-lg p-6 mb-6">
+                            <h4 class="font-semibold text-gray-800 mb-4">Live Metro Network Status</h4>
+                            <div class="grid grid-cols-10 gap-2 text-xs">
+                                <!-- Simplified metro map visualization -->
+                                <div class="col-span-10 flex items-center justify-between p-2 bg-white rounded">
+                                    <span>Rithala</span>
+                                    <div class="flex-1 mx-4 delhi-metro-red metro-line"></div>
+                                    <span>Dilshad Garden</span>
+                                </div>
+                                <div class="col-span-10 flex items-center justify-between p-2 bg-white rounded mt-2">
+                                    <span>Samaypur Badli</span>
+                                    <div class="flex-1 mx-4 delhi-metro-yellow metro-line"></div>
+                                    <span>HUDA City Centre</span>
+                                </div>
+                                <div class="col-span-10 flex items-center justify-between p-2 bg-white rounded mt-2">
+                                    <span>Dwarka</span>
+                                    <div class="flex-1 mx-4 delhi-metro-blue metro-line"></div>
+                                    <span>Noida Electronic City</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sidebar Info -->
+                    <div class="space-y-6">
+                        <!-- Weather Widget -->
+                        <div class="weather-widget rounded-lg p-4 text-white">
+                            <div class="flex items-center justify-between mb-2">
+                                <h4 class="font-semibold">Delhi Weather</h4>
+                                <span class="text-2xl">☀️</span>
+                            </div>
+                            <div class="text-2xl font-bold">28°C</div>
+                            <div class="text-sm opacity-90">Clear Sky</div>
+                            <div class="text-xs opacity-75 mt-2">Perfect for travel</div>
+                        </div>
+                        
+                        <!-- Crowd Levels -->
+                        <div class="bg-white rounded-lg p-4 border">
+                            <h4 class="font-semibold text-gray-800 mb-3">Current Crowd Levels</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Yellow Line</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="crowd-level-medium w-3 h-3 rounded-full"></div>
+                                        <span class="text-xs text-gray-600">Moderate</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Blue Line</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="crowd-level-high w-3 h-3 rounded-full"></div>
+                                        <span class="text-xs text-gray-600">High</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Red Line</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="crowd-level-low w-3 h-3 rounded-full"></div>
+                                        <span class="text-xs text-gray-600">Low</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions -->
+                        <div class="bg-white rounded-lg p-4 border">
+                            <h4 class="font-semibold text-gray-800 mb-3">Quick Actions</h4>
+                            <div class="space-y-2">
+                                <button class="w-full bg-blue-600 text-white py-2 px-3 rounded text-sm hover:bg-blue-700 transition-colors">
+                                    Rate Your Journey
+                                </button>
+                                <button class="w-full bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700 transition-colors">
+                                    Check Metro Card Balance
+                                </button>
+                                <button class="w-full bg-orange-600 text-white py-2 px-3 rounded text-sm hover:bg-orange-700 transition-colors">
+                                    Plan Your Route
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mumbai Tab Content -->
+            <div class="tab-content hidden" id="mumbai-content">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Mumbai Metro & Local</h3>
+                        <div class="grid md:grid-cols-2 gap-4 mb-8">
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Line 1 (Blue)</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="mumbai-metro-blue metro-line"></div>
+                                <p class="text-sm text-gray-600">Versova ↔ Ghatkopar</p>
+                                <p class="text-xs text-gray-500">12 stations • 11.4 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.3/5 (1,876 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Line 2 (Yellow)</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="mumbai-metro-yellow metro-line"></div>
+                                <p class="text-sm text-gray-600">Dahisar ↔ Mandale</p>
+                                <p class="text-xs text-gray-500">22 stations • 18.6 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★★☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">4.1/5 (987 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Western Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="bg-green-500 metro-line"></div>
+                                <p class="text-sm text-gray-600">Churchgate ↔ Dahanu Road</p>
+                                <p class="text-xs text-gray-500">37 stations • 123.7 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★☆☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">3.8/5 (5,432 reviews)</span>
+                                </div>
+                            </div>
+                            
+                            <div class="route-tile rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">Central Line</h4>
+                                    <div class="live-indicator"></div>
+                                </div>
+                                <div class="bg-yellow-500 metro-line"></div>
+                                <p class="text-sm text-gray-600">Chhatrapati Shivaji ↔ Kalyan</p>
+                                <p class="text-xs text-gray-500">25 stations • 53.3 km</p>
+                                <div class="flex items-center mt-2">
+                                    <span class="text-yellow-400">★★★☆☆</span>
+                                    <span class="text-xs text-gray-500 ml-2">3.6/5 (4,213 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg p-4 text-white">
+                            <h4 class="font-semibold mb-2">Mumbai Monsoon Alert</h4>
+                            <p class="text-sm opacity-90">Heavy rains expected today. Plan your journey accordingly.</p>
+                            <div class="text-xs opacity-75 mt-2">Last updated: 5 min ago</div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-4 border">
+                            <h4 class="font-semibold text-gray-800 mb-3">Local Train Status</h4>
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Western Line</span>
+                                    <span class="text-xs text-green-600 font-medium">Normal Service</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Central Line</span>
+                                    <span class="text-xs text-yellow-600 font-medium">Delayed (15 min)</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm">Harbour Line</span>
+                                    <span class="text-xs text-red-600 font-medium">Major Delays</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other city tabs would follow similar pattern -->
+            <div class="tab-content hidden" id="bangalore-content">
+                <div class="text-center py-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Bangalore Metro</h3>
+                    <p class="text-gray-600 mb-6">Namma Metro information coming soon!</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                        <p class="text-sm text-blue-800">We're working on adding comprehensive Bangalore metro data including Purple Line, Green Line, and upcoming expansions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="chennai-content">
+                <div class="text-center py-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Chennai Metro</h3>
+                    <p class="text-gray-600 mb-6">Chennai Metro information coming soon!</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                        <p class="text-sm text-blue-800">We're working on adding comprehensive Chennai metro data including Blue Line, Green Line, and upcoming expansions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="kolkata-content">
+                <div class="text-center py-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Kolkata Metro</h3>
+                    <p class="text-gray-600 mb-6">Kolkata Metro information coming soon!</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                        <p class="text-sm text-blue-800">We're working on adding comprehensive Kolkata metro data including Blue Line, Green Line, and upcoming expansions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content hidden" id="hyderabad-content">
+                <div class="text-center py-12">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Hyderabad Metro</h3>
+                    <p class="text-gray-600 mb-6">Hyderabad Metro information coming soon!</p>
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
+                        <p class="text-sm text-blue-800">We're working on adding comprehensive Hyderabad metro data including Red Line, Blue Line, Green Line, and upcoming expansions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Routes -->
+    <section class="py-16 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Popular Routes</h2>
+                <p class="text-xl text-gray-600">Most rated and reviewed transit routes across India</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="city-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Delhi Metro - Yellow Line</h3>
+                        <div class="rating-display text-white px-2 py-1 rounded text-sm font-bold">4.6</div>
+                    </div>
+                    <p class="text-gray-600 mb-3">HUDA City Centre ↔ Samaypur Badli</p>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm text-gray-500">37 stations • 49.3 km</span>
+                        <span class="text-sm text-green-600">3,567 reviews</span>
+                    </div>
+                    <div class="delhi-metro-yellow metro-line mb-3"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600">Peak Hours: 8-10 AM, 6-8 PM</span>
+                        <button class="text-blue-600 text-sm font-medium hover:underline">Rate This Route</button>
+                    </div>
+                </div>
+                
+                <div class="city-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Mumbai Local - Western Line</h3>
+                        <div class="rating-display text-white px-2 py-1 rounded text-sm font-bold">3.8</div>
+                    </div>
+                    <p class="text-gray-600 mb-3">Churchgate ↔ Virar</p>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm text-gray-500">25 stations • 60.2 km</span>
+                        <span class="text-sm text-green-600">5,432 reviews</span>
+                    </div>
+                    <div class="bg-green-500 metro-line mb-3"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600">Peak Hours: 7-11 AM, 5-9 PM</span>
+                        <button class="text-blue-600 text-sm font-medium hover:underline">Rate This Route</button>
+                    </div>
+                </div>
+                
+                <div class="city-card rounded-xl p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800">Bangalore Metro - Purple Line</h3>
+                        <div class="rating-display text-white px-2 py-1 rounded text-sm font-bold">4.2</div>
+                    </div>
+                    <p class="text-gray-600 mb-3">Whitefield ↔ Challaghatta</p>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm text-gray-500">19 stations • 22.5 km</span>
+                        <span class="text-sm text-green-600">2,156 reviews</span>
+                    </div>
+                    <div class="bangalore-metro-purple metro-line mb-3"></div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-600">Peak Hours: 8-10 AM, 5-8 PM</span>
+                        <button class="text-blue-600 text-sm font-medium hover:underline">Rate This Route</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regional Transit News -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Transit News & Updates</h2>
+                <p class="text-xl text-gray-600">Latest developments in India's transit infrastructure</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-48 flex items-center justify-center">
+                        <span class="text-4xl">🚇</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-blue-600 font-medium mb-2">Delhi Metro</div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Grey Line Extension Opens</h3>
+                        <p class="text-gray-600 text-sm mb-4">The much-awaited extension of Delhi Metro's Grey Line connecting Najafgarh to Dhansa Bus Stand was inaugurated today.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">2 hours ago</span>
+                            <button class="text-blue-600 text-sm font-medium hover:underline">Read More</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-green-500 to-teal-600 h-48 flex items-center justify-center">
+                        <span class="text-4xl">🚊</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-green-600 font-medium mb-2">Mumbai Metro</div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Line 3 Trial Runs Begin</h3>
+                        <p class="text-gray-600 text-sm mb-4">Mumbai Metro's Aqua Line 3 connecting Colaba-Bandra-SEEPZ has started trial runs with commercial operations expected by year-end.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">5 hours ago</span>
+                            <button class="text-blue-600 text-sm font-medium hover:underline">Read More</button>
+                        </div>
+                    </div>
+                </article>
+                
+                <article class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-purple-500 to-pink-600 h-48 flex items-center justify-center">
+                        <span class="text-4xl">🚉</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-sm text-purple-600 font-medium mb-2">Bangalore Metro</div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Pink Line Construction Progress</h3>
+                        <p class="text-gray-600 text-sm mb-4">Namma Metro's Pink Line connecting Kalena Agrahara to Nagawara has reached 65% completion with testing expected to begin next quarter.</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">1 day ago</span>
+                            <button class="text-blue-600 text-sm font-medium hover:underline">Read More</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">TR</span>
+                    </div>
+                    <span class="text-xl font-bold">TransitRate India</span>
+                </div>
+                <p class="text-gray-400 mb-4">Improving Indian public transportation through community feedback</p>
+                <p class="text-sm text-gray-500">© 2024 TransitRate India. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="transitrate.js"></script>
+    <script>
+        // India-specific JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeIndiaTransit();
+        });
+
+        function initializeIndiaTransit() {
+            initializeTabSystem();
+            initializeIndiaAnimations();
+            initializeLocationFeatures();
+        }
+
+        function initializeTabSystem() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const city = this.dataset.city;
+                    
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active', 'hidden'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Hide all tab contents
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Show selected tab content
+                    const selectedContent = document.getElementById(city + '-content');
+                    if (selectedContent) {
+                        selectedContent.classList.remove('hidden');
+                        selectedContent.classList.add('active');
+                        
+                        // Animate content entrance
+                        anime({
+                            targets: selectedContent,
+                            translateY: [30, 0],
+                            opacity: [0, 1],
+                            duration: 500,
+                            easing: 'easeOutExpo'
+                        });
+                    }
+                });
+            });
+        }
+
+        function initializeIndiaAnimations() {
+            // Animate hero text
+            if (typeof Splitting !== 'undefined') {
+                Splitting();
+                
+                anime({
+                    targets: '[data-splitting] .char',
+                    translateY: [100, 0],
+                    opacity: [0, 1],
+                    easing: 'easeOutExpo',
+                    duration: 1200,
+                    delay: anime.stagger(30)
+                });
+            }
+
+            // Animate city cards
+            anime({
+                targets: '.city-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                easing: 'easeOutExpo',
+                duration: 800,
+                delay: anime.stagger(150, {start: 1000})
+            });
+
+            // Animate route tiles
+            anime({
+                targets: '.route-tile',
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                easing: 'easeOutExpo',
+                duration: 600,
+                delay: anime.stagger(100, {start: 1500})
+            });
+        }
+
+        function initializeLocationFeatures() {
+            // Simulate location-based features
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        
+                        // Determine closest city based on coordinates
+                        const closestCity = findClosestCity(lat, lon);
+                        if (closestCity) {
+                            highlightNearestCity(closestCity);
+                        }
+                    },
+                    function(error) {
+                        console.log('Location access denied or unavailable');
+                    }
+                );
+            }
+        }
+
+        function findClosestCity(lat, lon) {
+            // Simplified city coordinates for demo
+            const cities = {
+                delhi: { lat: 28.6139, lon: 77.2090 },
+                mumbai: { lat: 19.0760, lon: 72.8777 },
+                bangalore: { lat: 12.9716, lon: 77.5946 },
+                chennai: { lat: 13.0827, lon: 80.2707 },
+                kolkata: { lat: 22.5726, lon: 88.3639 },
+                hyderabad: { lat: 17.3850, lon: 78.4867 }
+            };
+
+            let closestCity = null;
+            let minDistance = Infinity;
+
+            Object.entries(cities).forEach(([city, coords]) => {
+                const distance = Math.sqrt(
+                    Math.pow(lat - coords.lat, 2) + Math.pow(lon - coords.lon, 2)
+                );
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCity = city;
+                }
+            });
+
+            return closestCity;
+        }
+
+        function highlightNearestCity(city) {
+            const cityButton = document.querySelector(`[data-city="${city}"]`);
+            if (cityButton) {
+                cityButton.style.background = 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)';
+                cityButton.style.color = 'white';
+                cityButton.style.transform = 'scale(1.05)';
+                
+                // Add location indicator
+                const indicator = document.createElement('span');
+                indicator.textContent = ' 📍';
+                indicator.className = 'ml-1';
+                cityButton.appendChild(indicator);
+            }
+        }
+
+        // Simulate live updates
+        function simulateLiveUpdates() {
+            setInterval(() => {
+                // Update crowd levels randomly
+                const crowdIndicators = document.querySelectorAll('.crowd-level-low, .crowd-level-medium, .crowd-level-high');
+                crowdIndicators.forEach(indicator => {
+                    const levels = ['crowd-level-low', 'crowd-level-medium', 'crowd-level-high'];
+                    const currentLevel = levels.find(level => indicator.classList.contains(level));
+                    if (currentLevel) {
+                        indicator.classList.remove(currentLevel);
+                        const newLevel = levels[Math.floor(Math.random() * levels.length)];
+                        indicator.classList.add(newLevel);
+                    }
+                });
+            }, 30000); // Update every 30 seconds
+        }
+
+        // Start live updates
+        simulateLiveUpdates();
+    </script>
+</body>
+</html>

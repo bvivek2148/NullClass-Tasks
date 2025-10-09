@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1759162136919,
+      "tag": "0000_hard_solo",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1759164813708,
+      "tag": "0001_fuzzy_vector",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1759211579607,
+      "tag": "0002_massive_sebastian_shaw",
+      "breakpoints": true
+    }
+  ]
+}

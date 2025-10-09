@@ -1,0 +1,260 @@
+/* Language Selector Styles */
+.language-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.language-selector-wrapper {
+  position: relative;
+}
+
+.language-selector-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-elevated);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--border-radius);
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 140px;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+}
+
+.language-selector-button:hover {
+  background: #f1f5f9;
+  border-color: var(--color-primary);
+}
+
+.language-selector-button:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.language-selector-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.language-selector-button.compact {
+  min-width: auto;
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.current-language-text {
+  flex: 1;
+  text-align: left;
+}
+
+.current-language {
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-elevated);
+  border: 1px solid #e2e8f0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  margin-top: 4px;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.language-option:hover {
+  background: var(--color-surface);
+}
+
+.language-option:focus {
+  outline: none;
+  background: var(--color-surface);
+}
+
+.language-option.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.language-option .language-name {
+  flex: 1;
+}
+
+.language-option .language-code {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  margin-left: 8px;
+}
+
+.language-option.active .language-code {
+  color: var(--color-primary);
+}
+
+/* Compact variant styles */
+.language-selector-compact {
+  position: relative;
+}
+
+.language-selector-compact .language-dropdown {
+  min-width: 160px;
+}
+
+.language-selector-compact .language-option {
+  gap: 8px;
+}
+
+.language-selector-compact .language-code {
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  min-width: 24px;
+}
+
+/* Chevron rotation animation */
+.language-selector-button svg:last-child {
+  transition: transform 0.2s ease;
+}
+
+.language-selector-button svg:last-child.rotated {
+  transform: rotate(180deg);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Toast notification styles */
+.language-change-toast {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* RTL Support */
+[dir="rtl"] .language-selector-button {
+  text-align: right;
+}
+
+[dir="rtl"] .language-option {
+  text-align: right;
+}
+
+[dir="rtl"] .language-dropdown {
+  left: auto;
+  right: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .language-selector-button {
+    border-width: 2px;
+  }
+  
+  .language-option.active {
+    background: var(--color-primary);
+    color: white;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .language-dropdown {
+    animation: none;
+  }
+  
+  .language-selector-button svg:last-child {
+    transition: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .language-selector-button {
+    min-width: 120px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  .language-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .language-option {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+}
+
+/* Focus visible for better accessibility */
+.language-selector-button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.language-option:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}

@@ -1,0 +1,224 @@
+{
+  "ui": {
+    "navigation": {
+      "home": "Accueil",
+      "dashboard": "Tableau de bord",
+      "profile": "Profil",
+      "settings": "Paramètres",
+      "about": "À propos",
+      "contact": "Contact",
+      "logout": "Se déconnecter",
+      "login": "Se connecter",
+      "register": "S'inscrire",
+      "back": "Retour"
+    },
+    "buttons": {
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "delete": "Supprimer",
+      "edit": "Modifier",
+      "submit": "Soumettre",
+      "reset": "Réinitialiser",
+      "back": "Retour",
+      "next": "Suivant",
+      "previous": "Précédent",
+      "close": "Fermer",
+      "confirm": "Confirmer",
+      "search": "Rechercher",
+      "filter": "Filtrer",
+      "export": "Exporter",
+      "import": "Importer",
+      "download": "Télécharger",
+      "upload": "Téléverser",
+      "joinEvent": "Rejoindre l'événement",
+      "inviteFriends": "Inviter des amis",
+      "translate": "Traduire"
+    },
+    "labels": {
+      "language": "Langue",
+      "theme": "Thème",
+      "loading": "Chargement...",
+      "noData": "Aucune donnée disponible",
+      "optional": "Optionnel",
+      "required": "Requis",
+      "selectOption": "Sélectionner une option",
+      "selectLanguage": "Sélectionner la langue",
+      "registered": "Inscrit"
+    },
+    "status": {
+      "online": "En ligne",
+      "offline": "Hors ligne",
+      "connecting": "Connexion...",
+      "connected": "Connecté",
+      "disconnected": "Déconnecté",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "pending": "En attente",
+      "completed": "Terminé",
+      "failed": "Échoué"
+    }
+  },
+  "forms": {
+    "labels": {
+      "email": "Adresse e-mail",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "firstName": "Prénom",
+      "lastName": "Nom de famille",
+      "fullName": "Nom complet",
+      "username": "Nom d'utilisateur",
+      "phone": "Numéro de téléphone",
+      "address": "Adresse",
+      "city": "Ville",
+      "country": "Pays",
+      "zipCode": "Code postal",
+      "dateOfBirth": "Date de naissance",
+      "gender": "Genre",
+      "company": "Entreprise",
+      "jobTitle": "Titre du poste",
+      "website": "Site web",
+      "bio": "Biographie",
+      "message": "Message",
+      "subject": "Sujet"
+    },
+    "placeholders": {
+      "enterEmail": "Entrez votre adresse e-mail",
+      "enterPassword": "Entrez votre mot de passe",
+      "enterFirstName": "Entrez votre prénom",
+      "enterLastName": "Entrez votre nom de famille",
+      "enterPhone": "Entrez votre numéro de téléphone",
+      "enterMessage": "Entrez votre message",
+      "searchPlaceholder": "Rechercher...",
+      "typeHere": "Tapez ici..."
+    },
+    "validation": {
+      "required": "Ce champ est requis",
+      "invalidEmail": "Veuillez entrer une adresse e-mail valide",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+      "invalidPhone": "Veuillez entrer un numéro de téléphone valide",
+      "invalidUrl": "Veuillez entrer une URL valide",
+      "maxLength": "Maximum {{max}} caractères autorisés",
+      "minLength": "Minimum {{min}} caractères requis",
+      "invalidFormat": "Format invalide"
+    }
+  },
+  "messages": {
+    "success": {
+      "saved": "Enregistré avec succès !",
+      "deleted": "Supprimé avec succès !",
+      "updated": "Mis à jour avec succès !",
+      "created": "Créé avec succès !",
+      "sent": "Envoyé avec succès !",
+      "uploaded": "Téléversé avec succès !",
+      "downloaded": "Téléchargé avec succès !",
+      "loggedIn": "Connecté avec succès !",
+      "loggedOut": "Déconnecté avec succès !",
+      "registered": "Inscrit avec succès !"
+    },
+    "errors": {
+      "general": "Une erreur s'est produite. Veuillez réessayer.",
+      "network": "Erreur réseau. Veuillez vérifier votre connexion.",
+      "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+      "forbidden": "Accès refusé.",
+      "notFound": "La ressource demandée n'a pas été trouvée.",
+      "serverError": "Erreur du serveur. Veuillez réessayer plus tard.",
+      "validationFailed": "Échec de la validation. Veuillez vérifier votre saisie.",
+      "uploadFailed": "Échec du téléversement. Veuillez réessayer.",
+      "downloadFailed": "Échec du téléchargement. Veuillez réessayer.",
+      "loginFailed": "Échec de la connexion. Veuillez vérifier vos identifiants.",
+      "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter."
+    },
+    "warnings": {
+      "unsavedChanges": "Vous avez des modifications non enregistrées. Êtes-vous sûr de vouloir partir ?",
+      "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "irreversibleAction": "Cette action ne peut pas être annulée.",
+      "dataLoss": "Cette action peut entraîner une perte de données."
+    },
+    "info": {
+      "welcome": "Bienvenue sur GlobeSpeak !",
+      "noResults": "Aucun résultat trouvé.",
+      "emptyState": "Rien à afficher ici pour le moment.",
+      "comingSoon": "Bientôt disponible !",
+      "maintenance": "Maintenance du système en cours."
+    }
+  },
+  "pages": {
+    "titles": {
+      "home": "Accueil - GlobeSpeak",
+      "dashboard": "Tableau de bord - GlobeSpeak",
+      "profile": "Profil - GlobeSpeak",
+      "settings": "Paramètres - GlobeSpeak",
+      "about": "À propos - GlobeSpeak",
+      "contact": "Contact - GlobeSpeak",
+      "login": "Se connecter - GlobeSpeak",
+      "register": "S'inscrire - GlobeSpeak",
+      "notFound": "Page non trouvée - GlobeSpeak"
+    },
+    "descriptions": {
+      "home": "Bienvenue sur GlobeSpeak - Votre plateforme de communication internationale",
+      "dashboard": "Gérez votre compte et consultez votre activité",
+      "profile": "Consultez et modifiez les informations de votre profil",
+      "settings": "Personnalisez vos préférences et paramètres",
+      "about": "En savoir plus sur GlobeSpeak et notre mission",
+      "contact": "Contactez notre équipe de support",
+      "pronunciationPractice": "Pratiquez la prononciation avec des exemples audio"
+    },
+    "headings": {
+      "welcome": "Bienvenue sur GlobeSpeak",
+      "dashboard": "Tableau de bord",
+      "userProfile": "Profil utilisateur",
+      "accountSettings": "Paramètres du compte",
+      "aboutUs": "À propos de nous",
+      "contactUs": "Nous contacter",
+      "getStarted": "Commencer",
+      "features": "Fonctionnalités",
+      "testimonials": "Témoignages",
+      "eventAgenda": "Ordre du jour de l'événement",
+      "pronunciationPractice": "Pratique de la prononciation",
+      "eventHost": "Hôte de l'événement",
+      "participants": "Participants"
+    }
+  },
+  "accessibility": {
+    "skipToContent": "Aller au contenu principal",
+    "openMenu": "Ouvrir le menu de navigation",
+    "closeMenu": "Fermer le menu de navigation",
+    "toggleLanguage": "Basculer le sélecteur de langue",
+    "toggleTheme": "Basculer le thème",
+    "sortAscending": "Trier par ordre croissant",
+    "sortDescending": "Trier par ordre décroissant",
+    "expandSection": "Développer la section",
+    "collapseSection": "Réduire la section",
+    "previousPage": "Aller à la page précédente",
+    "nextPage": "Aller à la page suivante",
+    "currentPage": "Page actuelle",
+    "pageOf": "Page {{current}} sur {{total}}",
+    "loadingContent": "Chargement du contenu, veuillez patienter",
+    "errorOccurred": "Une erreur s'est produite",
+    "successMessage": "Message de succès",
+    "warningMessage": "Message d'avertissement",
+    "infoMessage": "Message d'information"
+  },
+  "time": {
+    "now": "maintenant",
+    "minuteAgo": "il y a une minute",
+    "minutesAgo": "il y a {{count}} minutes",
+    "hourAgo": "il y a une heure",
+    "hoursAgo": "il y a {{count}} heures",
+    "dayAgo": "il y a un jour",
+    "daysAgo": "il y a {{count}} jours",
+    "weekAgo": "il y a une semaine",
+    "weeksAgo": "il y a {{count}} semaines",
+    "monthAgo": "il y a un mois",
+    "monthsAgo": "il y a {{count}} mois",
+    "yearAgo": "il y a un an",
+    "yearsAgo": "il y a {{count}} ans"
+  },
+  "languages": {
+    "en": "English",
+    "es": "Español",
+    "fr": "Français",
+    "de": "Deutsch"
+  }
+}

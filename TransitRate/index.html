@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransitRate - Bus Route Rating & Review System</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting@1.0.6/dist/splitting.css">
+    <script src="https://unpkg.com/splitting@1.0.6/dist/splitting.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.1) 0%, rgba(8, 145, 178, 0.05) 100%);
+        }
+        
+        .star-rating {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .star-rating:hover {
+            transform: scale(1.1);
+        }
+        
+        .star-rating.filled {
+            color: #fbbf24;
+        }
+        
+        .star-rating.empty {
+            color: #d1d5db;
+        }
+        
+        .rating-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .animate-counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes pulse-glow {
+            from { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            to { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .review-card {
+            transition: all 0.3s ease;
+        }
+        
+        .review-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .hero-stats-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+        
+        .testimonial-card {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .route-badge {
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+        }
+        
+        .rating-display {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #3b82f6;
+            transition: left 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            left: 0;
+        }
+        
+        .mobile-menu-overlay {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">TR</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">TransitRate</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Home</a>
+                    <a href="india-transit.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">India Transit</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Dashboard</a>
+                    <a href="reviews.html" class="text-gray-700 hover:text-blue-600 transition-colors font-medium">Reviews</a>
+                    <a href="submit-review.html" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium">Rate Route</a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-blue-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+                <a href="dashboard.html" class="block py-2 text-gray-700 hover:text-blue-600">Dashboard</a>
+                <a href="reviews.html" class="block py-2 text-gray-700 hover:text-blue-600">Reviews</a>
+                <a href="submit-review.html" class="block py-2 bg-blue-600 text-white px-4 rounded-lg">Rate Route</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center hero-bg pt-16">
+        <div class="absolute inset-0 overflow-hidden">
+            <img src="resources/hero-transit.png" alt="Modern Transit System" class="w-full h-full object-cover opacity-20">
+        </div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Hero Content -->
+                <div class="space-y-8">
+                    <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+                        <span class="gradient-text" data-splitting>Rate Your</span><br>
+                        <span class="text-gray-800" data-splitting>Transit Experience</span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-600 leading-relaxed max-w-lg">
+                        Help improve public transportation by sharing your bus route experiences. 
+                        Your feedback drives better service for everyone.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="scrollToRating()" class="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-all pulse-glow">
+                            Start Rating
+                        </button>
+                        <a href="dashboard.html" class="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-all">
+                            View Analytics
+                        </a>
+                    </div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 pt-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-600 animate-counter" data-target="1247">0</div>
+                            <div class="text-sm text-gray-600 mt-1">Routes Rated</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-teal-600 animate-counter" data-target="8932">0</div>
+                            <div class="text-sm text-gray-600 mt-1">Reviews Submitted</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-600 animate-counter" data-target="4.2">0</div>
+                            <div class="text-sm text-gray-600 mt-1">Avg Rating</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Rating Interface -->
+                <div class="floating-element">
+                    <div class="rating-card rounded-2xl p-8 shadow-2xl">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Quick Rate Your Route</h3>
+                        
+                        <!-- Route Selection -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Route</label>
+                            <select id="route-select" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Choose a route...</option>
+                                <option value="route-1">Route 15 - Downtown Express</option>
+                                <option value="route-2">Route 23 - Airport Shuttle</option>
+                                <option value="route-3">Route 7 - University Loop</option>
+                                <option value="route-4">Route 42 - Shopping District</option>
+                                <option value="route-5">Route 11 - Residential Connector</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Overall Rating -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-3">Overall Satisfaction</label>
+                            <div class="flex space-x-2" id="overall-rating">
+                                <span class="star-rating empty text-3xl" data-rating="1">★</span>
+                                <span class="star-rating empty text-3xl" data-rating="2">★</span>
+                                <span class="star-rating empty text-3xl" data-rating="3">★</span>
+                                <span class="star-rating empty text-3xl" data-rating="4">★</span>
+                                <span class="star-rating empty text-3xl" data-rating="5">★</span>
+                            </div>
+                            <div class="text-sm text-gray-500 mt-2" id="rating-text">Click to rate</div>
+                        </div>
+                        
+                        <!-- Quick Feedback -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Quick Feedback (Optional)</label>
+                            <textarea id="quick-feedback" rows="3" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Share your experience..."></textarea>
+                        </div>
+                        
+                        <button onclick="submitQuickRating()" class="w-full bg-teal-600 text-white py-3 rounded-lg font-semibold hover:bg-teal-700 transition-all">
+                            Submit Rating
+                        </button>
+                        
+                        <p class="text-xs text-gray-500 mt-4 text-center">
+                            <a href="submit-review.html" class="text-blue-600 hover:underline">Write a detailed review</a> for more impact
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Why Rate Your Transit Experience?</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Your feedback helps create better public transportation for everyone. 
+                    Every rating contributes to improved service quality and accountability.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 rounded-xl hover:bg-gray-50 transition-colors">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Improve Service Quality</h3>
+                    <p class="text-gray-600">Your ratings help transit authorities identify areas for improvement and recognize excellent service.</p>
+                </div>
+                
+                <div class="text-center p-8 rounded-xl hover:bg-gray-50 transition-colors">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Community Impact</h3>
+                    <p class="text-gray-600">Join thousands of riders working together to create a better transit experience for the entire community.</p>
+                </div>
+                
+                <div class="text-center p-8 rounded-xl hover:bg-gray-50 transition-colors">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Accountability & Transparency</h3>
+                    <p class="text-gray-600">Promote transparency in public transportation with open ratings and constructive feedback systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Reviews Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Recent Reviews</h2>
+                <p class="text-xl text-gray-600">See what other riders are saying about their transit experiences</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="recent-reviews">
+                <!-- Reviews will be populated by JavaScript -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="reviews.html" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                    View All Reviews
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="flex items-center justify-center space-x-2 mb-4">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">TR</span>
+                    </div>
+                    <span class="text-xl font-bold">TransitRate</span>
+                </div>
+                <p class="text-gray-400 mb-4">Improving public transportation through community feedback</p>
+                <p class="text-sm text-gray-500">© 2024 TransitRate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="transitrate.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
