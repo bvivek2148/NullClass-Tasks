@@ -29,72 +29,72 @@ const itemVariants = {
 const features = [
   {
     icon: MessageCircle,
-    title: "24/7 AI सहायता",
-    description: "किसी भी समय अपने सवालों का तुरंत जवाब पाएं। हमारा AI सहायक हमेशा आपकी मदद के लिए तैयार है।",
+    title: "24/7 AI Support",
+    description: "Get instant answers to your questions at any time. Our AI assistant is always ready to help you with your travel needs.",
     color: "orange",
     gradient: "from-orange-500 to-orange-600"
   },
   {
     icon: Calendar,
-    title: "आसान बुकिंग",
-    description: "सेकंडों में अपनी यात्रा बुक करें। बस हमारे सहायक से बात करें और अपनी यात्रा बुक करें।",
+    title: "Easy Booking",
+    description: "Book your travel in seconds. Just chat with our assistant and get your trip booked instantly.",
     color: "blue",
     gradient: "from-blue-500 to-blue-600"
   },
   {
     icon: MapPin,
-    title: "रूट जानकारी",
-    description: "उपलब्ध रूट, समय सारणी और कीमतों की जानकारी प्राप्त करें। अपनी यात्रा के लिए सभी विवरण पाएं।",
+    title: "Route Information",
+    description: "Get information on available routes, schedules, and pricing. Find all details for your journey.",
     color: "green",
     gradient: "from-green-500 to-green-600"
   },
   {
     icon: Clock,
-    title: "रियल-टाइम अपडेट",
-    description: "लाइव शेड्यूल अपडेट और अपनी यात्रा के बारे में तत्काल सूचनाओं के साथ सूचित रहें।",
+    title: "Real-time Updates",
+    description: "Stay informed with live schedule updates and instant notifications about your journey.",
     color: "purple",
     gradient: "from-purple-500 to-purple-600"
   },
   {
     icon: Shield,
-    title: "सुरक्षित भुगतान",
-    description: "आपके लेनदेन बैंक-स्तरीय सुरक्षा और एन्क्रिप्शन के साथ सुरक्षित हैं।",
+    title: "Secure Payments",
+    description: "Your transactions are protected with bank-level security and encryption protocols.",
     color: "red",
     gradient: "from-red-500 to-red-600"
   },
   {
     icon: Award,
-    title: "सर्वोत्तम मूल्य गारंटी",
-    description: "हम सुनिश्चित करते हैं कि आपको अपनी सभी यात्रा बुकिंग के लिए सबसे अच्छी कीमतें मिलें।",
+    title: "Best Price Guarantee",
+    description: "We ensure you get the best prices for all your travel bookings with our price match guarantee.",
     color: "yellow",
     gradient: "from-yellow-500 to-yellow-600"
   }
 ];
 
 const stats = [
-  { icon: Users, value: "10 लाख+", label: "खुश यात्री" },
-  { icon: MapPin, value: "500+", label: "उपलब्ध रूट" },
-  { icon: TrendingUp, value: "98%", label: "संतुष्टि दर" },
-  { icon: Globe, value: "100+", label: "जुड़े शहर" }
+  { icon: Users, value: "1M+", label: "Happy Travelers" },
+  { icon: MapPin, value: "500+", label: "Available Routes" },
+  { icon: TrendingUp, value: "98%", label: "Satisfaction Rate" },
+  { icon: Globe, value: "100+", label: "Connected Cities" }
 ];
 
 const testimonials = [
   {
-    name: "विवेक बुक्का",
-    role: "व्यवसायिक यात्री",
-    content: "Yatra Saathi ने मेरी यात्रा बुकिंग के तरीके में क्रांति ला दी है। AI सहायक बेहद मददगार है और मेरा बहुत समय बचाता है!",
+    name: "Vivek Bukka",
+    role: "Frequent Traveler",
+    content: "TravelMate AI has revolutionized how I book my travels. The AI assistant is incredibly helpful and saves me so much time!",
     rating: 5
   },
   {
-    name: "राजेश कुमार",
-    role: "छुट्टी योजनाकार",
-    content: "सबसे अच्छा ट्रैवल बुकिंग प्लेटफॉर्म जो मैंने इस्तेमाल किया है। इंटरफ़ेस सहज है और सहायता उत्कृष्ट है।",
+    name: "Rajesh Kumar",
+    role: "Family Traveler",
+    content: "The best travel booking platform I've used. The interface is intuitive and the support is excellent.",
     rating: 5
   },
   {
-    name: "अनीता पटेल",
-    role: "नियमित यात्री",
-    content: "मुझे यह पसंद है कि रूट खोजना और टिकट बुक करना कितना आसान है। रियल-टाइम अपडेट गेम चेंजर हैं!",
+    name: "Anita Patel",
+    role: "Weekend Explorer",
+    content: "I love how easy it is to find routes and book tickets. The real-time updates are game changers!",
     rating: 5
   }
 ];
@@ -105,11 +105,18 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-orange-500 via-orange-600 to-green-600 text-white overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDM0YzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00em0wIDEwYzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-40" />
+      <section className="relative min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-emerald-600 text-white overflow-hidden flex items-center">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/3 rounded-full blur-3xl animate-pulse delay-500"></div>
+        </div>
         
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0YzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00em0wIDEwYzAtMi4yMSAxLjc5LTQgNC00czQgMS43OSA0IDQtMS43OSA0LTQgNC00LTEuNzktNC00eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30" />
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 w-full">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -119,46 +126,46 @@ export default function HomePage() {
             <motion.div variants={itemVariants}>
               <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 shadow-lg mb-6">
                 <Sparkles className="h-5 w-5" />
-                <span className="text-sm font-semibold">AI से चलने वाला यात्रा मंच</span>
+                <span className="text-sm font-semibold">AI-Powered Travel Platform</span>
               </div>
             </motion.div>
             
             <motion.h1 
               variants={itemVariants}
-              className="text-5xl md:text-7xl font-bold tracking-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight"
             >
-              AI सहायता के साथ
-              <span className="block mt-2">स्मार्ट यात्रा करें</span>
+              Smart Travel with
+              <span className="block mt-2">AI Assistance</span>
             </motion.h1>
             
             <motion.p 
               variants={itemVariants}
               className="text-xl md:text-2xl text-orange-50 leading-relaxed"
             >
-              तत्काल सहायता, रियल-टाइम अपडेट और व्यक्तिगत यात्रा सिफारिशों के साथ निर्बाध बुकिंग का अनुभव करें।
+              Experience seamless booking with instant assistance, real-time updates, and personalized travel recommendations.
             </motion.p>
 
             <motion.div 
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 justify-center pt-8"
+              className="flex flex-col sm:flex-row gap-4 justify-center pt-8 w-full max-w-md mx-auto sm:max-w-none"
             >
-              <Link to={createPageUrl("Chat")}>
+              <Link to={createPageUrl("Chat")} className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
-                  className="gap-2 bg-white text-orange-700 hover:bg-slate-50 shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 text-lg px-10 py-7 rounded-2xl font-semibold"
+                  className="w-full gap-2 bg-white text-blue-700 hover:bg-blue-50 shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 text-lg px-10 py-7 rounded-2xl font-semibold transform hover:scale-105"
                 >
                   <MessageCircle className="h-6 w-6" />
-                  अभी बात करें
+                  Chat Now
                 </Button>
               </Link>
-              <Link to={createPageUrl("Routes")}>
+              <Link to={createPageUrl("Routes")} className="w-full sm:w-auto">
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="gap-2 border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-lg px-10 py-7 rounded-2xl font-semibold"
+                  className="w-full gap-2 border-2 border-white text-white hover:bg-white/20 backdrop-blur-sm transition-all duration-300 text-lg px-10 py-7 rounded-2xl font-semibold transform hover:scale-105"
                 >
                   <MapPin className="h-6 w-6" />
-                  रूट देखें
+                  View Routes
                 </Button>
               </Link>
             </motion.div>
@@ -192,7 +199,7 @@ export default function HomePage() {
                   whileHover={{ scale: 1.05 }}
                   className="text-center"
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <Icon className="h-8 w-8 text-white" />
                   </div>
                   <div className="text-4xl font-bold text-slate-900 mb-2">{stat.value}</div>
@@ -215,10 +222,10 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              आपको जो कुछ भी चाहिए
+              Everything You Need
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              शक्तिशाली सुविधाएं जो आपके यात्रा अनुभव को निर्बाध और आनंददायक बनाने के लिए डिज़ाइन की गई हैं
+              Powerful features designed to make your travel experience seamless and enjoyable
             </p>
           </motion.div>
 
@@ -229,21 +236,21 @@ export default function HomePage() {
                 className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-md transition-all duration-300 text-base font-semibold"
               >
                 <Sparkles className="h-5 w-5 mr-2" />
-                अवलोकन
+                Overview
               </TabsTrigger>
               <TabsTrigger 
                 value="features" 
                 className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-md transition-all duration-300 text-base font-semibold"
               >
                 <Award className="h-5 w-5 mr-2" />
-                सुविधाएं
+                Features
               </TabsTrigger>
               <TabsTrigger 
                 value="how-it-works" 
                 className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-md transition-all duration-300 text-base font-semibold"
               >
                 <Globe className="h-5 w-5 mr-2" />
-                कैसे काम करता है
+                How It Works
               </TabsTrigger>
             </TabsList>
 
@@ -316,29 +323,29 @@ export default function HomePage() {
                 {[
                   {
                     step: "01",
-                    title: "बातचीत शुरू करें",
-                    description: "चैट बटन पर क्लिक करें और हमारे AI सहायक को बताएं कि आप कहां जाना चाहते हैं।",
+                    title: "Start a Conversation",
+                    description: "Click the chat button and tell our AI assistant where you want to go.",
                     icon: MessageCircle,
                     color: "orange"
                   },
                   {
                     step: "02",
-                    title: "विकल्प खोजें",
-                    description: "तुरंत व्यक्तिगत रूट सुझाव, समय सारणी और मूल्य निर्धारण प्राप्त करें।",
+                    title: "Explore Options",
+                    description: "Get instant personalized route suggestions, schedules, and pricing.",
                     icon: MapPin,
                     color: "blue"
                   },
                   {
                     step: "03",
-                    title: "अपनी यात्रा बुक करें",
-                    description: "अपने बुकिंग विवरण की पुष्टि करें और तुरंत पुष्टिकरण प्राप्त करें।",
+                    title: "Book Your Trip",
+                    description: "Confirm your booking details and receive instant confirmation.",
                     icon: Ticket,
                     color: "green"
                   },
                   {
                     step: "04",
-                    title: "आत्मविश्वास से यात्रा करें",
-                    description: "अपनी यात्रा के दौरान रियल-टाइम अपडेट और सहायता प्राप्त करें।",
+                    title: "Travel with Confidence",
+                    description: "Get real-time updates and support throughout your journey.",
                     icon: Shield,
                     color: "purple"
                   }
@@ -358,7 +365,7 @@ export default function HomePage() {
                             <Icon className="h-10 w-10 text-white" />
                           </div>
                           <div className="flex-1">
-                            <div className="text-sm font-bold text-slate-400 mb-3">चरण {step.step}</div>
+                            <div className="text-sm font-bold text-slate-400 mb-3">Step {step.step}</div>
                             <h3 className="text-2xl font-bold text-slate-900 mb-3">{step.title}</h3>
                             <p className="text-slate-600 leading-relaxed text-base">{step.description}</p>
                           </div>
@@ -384,10 +391,10 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-              यात्रियों द्वारा पसंद किया गया
+              Loved by Travelers
             </h2>
             <p className="text-xl text-slate-600">
-              हमारे ग्राहकों को अपने अनुभव के बारे में क्या कहना है, देखें
+              See what our customers have to say about their experience
             </p>
           </motion.div>
 
@@ -424,8 +431,14 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-orange-500 via-orange-600 to-green-600">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+      <section className="py-20 bg-gradient-to-br from-blue-600 via-purple-600 to-emerald-600 relative overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0">
+          <div className="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-pulse delay-700"></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -439,17 +452,17 @@ export default function HomePage() {
             >
               <Sparkles className="h-20 w-20 mx-auto" />
             </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">अपनी यात्रा शुरू करने के लिए तैयार हैं?</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">Ready to Start Your Journey?</h2>
             <p className="text-xl text-orange-50 mb-10 leading-relaxed">
-              हजारों संतुष्ट यात्रियों के साथ जुड़ें और आज ही यात्रा बुकिंग के भविष्य का अनुभव करें।
+              Join thousands of satisfied travelers and experience the future of travel booking today.
             </p>
             <Link to={createPageUrl("Chat")}>
               <Button 
                 size="lg" 
-                className="gap-2 bg-white text-orange-700 hover:bg-slate-50 shadow-2xl hover:shadow-white/50 transition-all duration-300 text-lg px-10 py-7 rounded-2xl font-semibold"
+                className="gap-2 bg-white text-blue-700 hover:bg-blue-50 shadow-2xl hover:shadow-white/50 transition-all duration-300 text-lg px-10 py-7 rounded-2xl font-semibold transform hover:scale-105"
               >
                 <MessageCircle className="h-6 w-6" />
-                अभी शुरू करें
+                Get Started Now
               </Button>
             </Link>
           </motion.div>

@@ -8,6 +8,7 @@ A comprehensive React application demonstrating best practices for international
 [![Vite](https://img.shields.io/badge/Vite-5+-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 
 ## 🌍 Overview
+- **Live Demo**: [GlobeSpeak](https://globe-speak-gamma.vercel.app/)
 
 GlobeSpeak is a cutting-edge communication platform designed to break down language barriers and connect people across the globe. Built with modern web technologies and following industry best practices, GlobeSpeak provides a seamless multilingual experience with robust accessibility features.
 

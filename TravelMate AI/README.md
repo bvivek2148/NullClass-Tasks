@@ -2,6 +2,12 @@
 
 A modern, AI-powered travel companion application built with React, Vite, and Tailwind CSS. TravelMate AI helps users plan their trips, discover destinations, and get personalized travel recommendations through an intelligent chat interface.
 
+## 🚀 Live Demo
+
+**[🌐 Experience TravelMate AI Live →](https://travel-mate-ai-ed357304.base44.app)**
+
+*Try the AI-powered travel companion with intelligent chat interface, trip planning, and personalized recommendations.*
+
 ## 🚀 Features
 
 - **AI-Powered Chat Interface**: Interactive chat with intelligent travel recommendations

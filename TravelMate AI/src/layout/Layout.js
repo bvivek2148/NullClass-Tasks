@@ -53,15 +53,15 @@ export default function Layout({ children, currentPageName }) {
               <motion.div
                 whileHover={{ rotate: 360 }}
                 transition={{ duration: 0.6 }}
-                className="w-12 h-12 bg-gradient-to-br from-orange-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow"
+                className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow"
               >
                 <MessageCircle className="w-6 h-6 text-white" />
               </motion.div>
               <div className="hidden sm:block">
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-green-600 bg-clip-text text-transparent">
-                  Yatra Saathi
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+                  TravelMate AI
                 </h1>
-                <p className="text-xs text-slate-500">AI से यात्रा आसान</p>
+                <p className="text-xs text-slate-500">Smart Travel with AI</p>
               </div>
             </Link>
 
@@ -76,8 +76,8 @@ export default function Layout({ children, currentPageName }) {
                       variant={isActive ? "default" : "ghost"}
                       className={`gap-2 transition-all duration-300 ${
                         isActive
-                          ? "bg-gradient-to-r from-orange-500 to-green-600 text-white shadow-md"
-                          : "hover:bg-orange-50 hover:text-orange-700"
+                          ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
+                          : "hover:bg-blue-50 hover:text-blue-700"
                       }`}
                     >
                       <Icon className="w-4 h-4" />
@@ -91,9 +91,9 @@ export default function Layout({ children, currentPageName }) {
             {/* CTA Button */}
             <div className="hidden md:block">
               <Link to={createPageUrl("Chat")}>
-                <Button className="gap-2 bg-gradient-to-r from-orange-500 to-green-600 hover:from-orange-600 hover:to-green-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <Button className="gap-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
                   <MessageCircle className="w-4 h-4" />
-                  सहायता प्राप्त करें
+                  Get Help
                 </Button>
               </Link>
             </div>
@@ -138,7 +138,7 @@ export default function Layout({ children, currentPageName }) {
                         variant={isActive ? "default" : "ghost"}
                         className={`w-full justify-start gap-3 ${
                           isActive
-                            ? "bg-gradient-to-r from-orange-500 to-green-600 text-white"
+                            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white"
                             : ""
                         }`}
                       >
@@ -149,9 +149,9 @@ export default function Layout({ children, currentPageName }) {
                   );
                 })}
                 <Link to={createPageUrl("Chat")} onClick={() => setMobileMenuOpen(false)}>
-                  <Button className="w-full gap-2 bg-gradient-to-r from-orange-500 to-green-600 text-white">
+                  <Button className="w-full gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                     <MessageCircle className="w-5 h-5" />
-                    सहायता प्राप्त करें
+                    Get Help
                   </Button>
                 </Link>
               </div>
@@ -172,19 +172,19 @@ export default function Layout({ children, currentPageName }) {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-green-600 rounded-xl flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
                   <MessageCircle className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-xl font-bold">Yatra Saathi</h3>
+                <h3 className="text-xl font-bold">TravelMate AI</h3>
               </div>
               <p className="text-slate-400 text-sm">
-                आपके सफर का विश्वसनीय साथी। AI तकनीक से यात्रा बुकिंग अब और भी आसान।
+                Your trusted travel companion. Making travel booking easier with AI technology.
               </p>
             </div>
 
             {/* Quick Links */}
             <div>
-              <h4 className="font-semibold mb-4 text-lg">त्वरित लिंक</h4>
+              <h4 className="font-semibold mb-4 text-lg">Quick Links</h4>
               <ul className="space-y-2">
                 {navigationItems.map((item) => (
                   <li key={item.title}>
@@ -201,18 +201,18 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Services */}
             <div>
-              <h4 className="font-semibold mb-4 text-lg">सेवाएं</h4>
+              <h4 className="font-semibold mb-4 text-lg">Services</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li className="hover:text-white transition-colors cursor-pointer">बस बुकिंग</li>
-                <li className="hover:text-white transition-colors cursor-pointer">ट्रेन बुकिंग</li>
-                <li className="hover:text-white transition-colors cursor-pointer">फ्लाइट बुकिंग</li>
-                <li className="hover:text-white transition-colors cursor-pointer">कैब बुकिंग</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Bus Booking</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Train Booking</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Flight Booking</li>
+                <li className="hover:text-white transition-colors cursor-pointer">Cab Booking</li>
               </ul>
             </div>
 
             {/* Contact */}
             <div>
-              <h4 className="font-semibold mb-4 text-lg">संपर्क करें</h4>
+              <h4 className="font-semibold mb-4 text-lg">Contact Us</h4>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3 text-slate-400 text-sm">
                   <Phone className="w-4 h-4" />
@@ -220,7 +220,7 @@ export default function Layout({ children, currentPageName }) {
                 </li>
                 <li className="flex items-center gap-3 text-slate-400 text-sm">
                   <Mail className="w-4 h-4" />
-                  <span>support@yatrasaathi.in</span>
+                  <span>support@travelmateai.com</span>
                 </li>
                 <li className="flex items-center gap-3 text-slate-400 text-sm">
                   <LocationIcon className="w-4 h-4" />
@@ -233,12 +233,12 @@ export default function Layout({ children, currentPageName }) {
           {/* Bottom Bar */}
           <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-400 text-sm">
-              © {new Date().getFullYear()} Yatra Saathi. सर्वाधिकार सुरक्षित।
+              © {new Date().getFullYear()} TravelMate AI. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm text-slate-400">
-              <a href="#" className="hover:text-white transition-colors">गोपनीयता नीति</a>
-              <a href="#" className="hover:text-white transition-colors">सेवा की शर्तें</a>
-              <a href="#" className="hover:text-white transition-colors">कुकी नीति</a>
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@
 
   **Revolutionizing bus travel in India with immersive virtual tours and transparent seat selection**
 
-  [🚀 Live Demo](https://seemyseat.vercel.app) • [📖 Documentation](#-documentation) • [🤝 Contributing](#-contributing) • [📞 Support](#-support)
+  [🚀 Live Demo](https://seemyseat.netlify.app/) • [📖 Documentation](#-documentation) • [🤝 Contributing](#-contributing) • [📞 Support](#-support)
 
 </div>
 

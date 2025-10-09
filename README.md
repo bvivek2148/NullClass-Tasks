@@ -50,7 +50,7 @@ This repository represents a comprehensive showcase of modern web development ex
 Explore the live demonstrations of each project to experience their features and functionality firsthand. Each demo showcases the project's key capabilities, user interface, and technical implementation.
 
 #### **🌱 Project 1: EcoRoute - Carbon Footprint Calculator**
-- **Live Demo**: [ecoroute-demo.vercel.app](https://ecoroute-demo.vercel.app)
+- **Live Demo**: [EcoRoute](https://ecoroute-nine.vercel.app/)
 - **Demo Features**: 
   - Interactive carbon footprint calculator with real-time calculations
   - Route planning with eco-friendly alternatives
@@ -60,7 +60,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Desktop browser for full Google Maps integration
 
 #### **🪑 Project 2: SeeMySeat - Seat Booking System**
-- **Live Demo**: [seemyseat-demo.netlify.app](https://seemyseat-demo.netlify.app)
+- **Live Demo**: [SeeMySeat](https://seemyseat.netlify.app/)
 - **Demo Features**:
   - Visual seat selection interface
   - Real-time availability updates
@@ -70,7 +70,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Mobile and tablet devices
 
 #### **🤝 Project 3: TripTogether - Collaborative Travel Planning**
-- **Live Demo**: [triptogether-demo.vercel.app](https://triptogether-demo.vercel.app)
+- **Live Demo**: [TripTogether](https://trip-together-seven.vercel.app/)
 - **Demo Features**:
   - Group trip planning interface
   - Collaborative itinerary management
@@ -82,7 +82,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Desktop browser for full collaboration features
 
 #### **🚌 Project 4: TravelCircles - Indian Bus Booking Platform**
-- **Live Demo**: [travelcircles-demo.herokuapp.com](https://travelcircles-demo.herokuapp.com)
+- **Live Demo**: [TravelCircles](https://travelcircles.vercel.app/)
 - **Demo Features**:
   - Complete bus booking simulation
   - Multi-language interface (Hindi/English)
@@ -95,7 +95,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Note**: First load may take 30 seconds (Heroku cold start)
 
 #### **🌍 Project 5: GlobeSpeak - Internationalization Platform**
-- **Live Demo**: [globespeak-demo.surge.sh](https://globespeak-demo.surge.sh)
+- **Live Demo**: [GlobeSpeak](https://globe-speak-gamma.vercel.app/)
 - **Demo Features**:
   - Dynamic language switching
   - Multiple locale support
@@ -105,7 +105,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Desktop browser to test all language features
 
 #### **🔔 Project 6: NotifyHub - Notification Management**
-- **Live Demo**: [notifyhub-demo.vercel.app](https://notifyhub-xi.vercel.app/)
+- **Live Demo**: [NotifyHub](https://notifyhub-xi.vercel.app/)
 - **Demo Features**:
   - Multi-channel notification center
   - Advanced UI component showcase
@@ -115,7 +115,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Desktop browser for full component library
 
 #### **⭐ Project 7: TransitRate - Transportation Rating**
-- **Live Demo**: [transitrate-demo.github.io](https://transitrate-demo.github.io)
+- **Live Demo**: [TransitRate](https://transitrate.netlify.app/)
 - **Demo Features**:
   - Indian transit rating system
   - Interactive route maps
@@ -125,7 +125,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Mobile device for location-based features
 
 #### **💡 Project 8: Lumos - Lighting Management**
-- **Live Demo**: [lumos-demo.netlify.app](https://lumos-demo.netlify.app)
+- **Live Demo**: [Lumos](https://lumos-theme.netlify.app/)
 - **Demo Features**:
   - Professional lighting control interface
   - Data visualization dashboard
@@ -135,7 +135,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Desktop or tablet for dashboard view
 
 #### **🤖 Project 9: TravelMate AI - AI Travel Companion**
-- **Live Demo**: [travelmate-ai-demo.firebase.app](https://travelmate-ai-demo.firebase.app)
+- **Live Demo**: [TravelMate AI](https://travel-mate-ai-ed357304.base44.app)
 - **Demo Features**:
   - AI-powered travel recommendations
   - Smart itinerary generation
@@ -145,7 +145,7 @@ Explore the live demonstrations of each project to experience their features and
 - **Best Experience**: Mobile device for travel companion experience
 
 #### **🗺️ Project 10: RouteWise - Route Planning Platform**
-- **Live Demo**: [routewise-demo.surge.sh](https://routewise-demo.surge.sh)
+- **Live Demo**: [RouteWise](https://route-wise-nine.vercel.app/)
 - **Demo Features**:
   - Interactive mapping with Leaflet
   - Business analytics dashboard

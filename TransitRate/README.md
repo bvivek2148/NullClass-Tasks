@@ -47,9 +47,9 @@ To create better public transportation experiences by empowering passengers with
 ## 🚀 Demo & Live Preview
 
 Experience TransitRate in action:
-- **Main Application**: [Live Demo](https://transitrate.demo.com)
-- **Dashboard**: [Analytics Dashboard](https://transitrate.demo.com/dashboard.html)
-- **Reviews**: [Browse Reviews](https://transitrate.demo.com/reviews.html)
+- **Main Application**: [Live Demo](https://transitrate.netlify.app/)
+- **Dashboard**: [Analytics Dashboard](https://transitrate.netlify.app/dashboard)
+- **Reviews**: [Browse Reviews](https://transitrate.netlify.app/reviews)
 
 ## 📁 Project Structure
 
